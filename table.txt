@@ -1,0 +1,100 @@
+CREATE TABLE users (
+  user_id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  first_name VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  last_name  VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  username   VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL UNIQUE,
+  password   VARCHAR(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  usertype   ENUM(
+      'Governor',
+      'Vice Governor',
+      'Secretary',
+      'Auditor',
+      'Treasurer',
+      'Social Manager',
+      'Senator'
+  ) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'Senator',
+  date_in DATE NULL,
+  time_in TIME NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+CREATE TABLE student_profile (
+  students_id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  user_id INT(11) NOT NULL,
+  FirstName VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  LastName VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  MI VARCHAR(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
+  Suffix ENUM('Sr', 'Jr', 'III', 'IV', 'V') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
+  Course ENUM('BSIT', 'BSCS') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  YearLevel ENUM('1stYear', '2ndYear', '3rdYear', '4thYear') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  Section ENUM('BSIT 1A', 'BSIT 1B', 'BSIT 2A', 'BSIT 2B', 'BSIT 3A', 'BSIT 3B', 'BSIT 4A', 'BSIT 4B') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  PhoneNumber VARCHAR(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
+  Gender ENUM('Male', 'Female', 'Other') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  DOB DATE NULL,
+  Age INT(11) NULL,
+  Religion VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
+  EmailAddress VARCHAR(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
+  Street VARCHAR(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
+  Barangay VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
+  Municipality VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
+  Province VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
+  ZipCode VARCHAR(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
+  FOREIGN KEY (user_id) REFERENCES users`(user_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+
+CREATE TABLE registration (
+  registration_no VARCHAR(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL PRIMARY KEY,
+  user_id INT(11) NOT NULL,
+  students_id INT(11) NOT NULL,
+  registration_date DATE NOT NULL,
+  semester ENUM('First Semester', 'Second Semester') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  membership_fee DECIMAL(10,2) NOT NULL,
+  amount DECIMAL(10,2) NOT NULL,
+  payment_type ENUM('Cash', 'Gcash', 'Other') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  payment_status ENUM('Paid', 'Unpaid', 'Partial Paid') CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT 'Unpaid',
+  
+  FOREIGN KEY (user_id) REFERENCES users`(user_id`) ON DELETE CASCADE,
+  FOREIGN KEY (students_id) REFERENCES student_profile`(students_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+CREATE TABLE educational_background (
+  edu_id INT(11) NOT NULL AUTO_INCREMENT,
+  students_id INT(11) DEFAULT NULL,
+  elementary VARCHAR(150) DEFAULT NULL,
+  elem_year_grad YEAR(4) DEFAULT NULL,
+  elem_received VARCHAR(100) DEFAULT NULL,
+  junior_high VARCHAR(150) DEFAULT NULL,
+  jr_high_grad YEAR(4) DEFAULT NULL,
+  jr_received VARCHAR(100) DEFAULT NULL,
+  senior_high VARCHAR(150) DEFAULT NULL,
+  sr_high_grad YEAR(4) DEFAULT NULL,
+  sr_received VARCHAR(100) DEFAULT NULL,
+  PRIMARY KEY (edu_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+CREATE TABLE family_background (
+  fam_id INT(11) NOT NULL AUTO_INCREMENT,
+  students_id INT(11) DEFAULT NULL,
+  father_name VARCHAR(150) DEFAULT NULL,
+  father_occupation VARCHAR(150) DEFAULT NULL,
+  mother_name VARCHAR(150) DEFAULT NULL,
+  mother_occupation VARCHAR(150) DEFAULT NULL,
+  phone_number VARCHAR(20) DEFAULT NULL,
+  siblings_count INT(11) DEFAULT NULL,
+  guardian_name VARCHAR(150) DEFAULT NULL,
+  guardian_occupation VARCHAR(150) DEFAULT NULL,
+  contact_number VARCHAR(20) DEFAULT NULL,
+  street VARCHAR(150) DEFAULT NULL,
+  barangay VARCHAR(100) DEFAULT NULL,
+  municipality VARCHAR(100) DEFAULT NULL,
+  province VARCHAR(100) DEFAULT NULL,
+  zipcode VARCHAR(20) DEFAULT NULL,
+  PRIMARY KEY (fam_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+
