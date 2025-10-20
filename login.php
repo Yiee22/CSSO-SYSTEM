@@ -8,8 +8,8 @@ if ($conn->connect_error) {
 
 $message = "";
 $success = false;
-$loginSuccess = false;
-$redirectPage = "";
+$loginSuccess = false;  // ✅ added missing
+$redirectPage = "";     // ✅ added missing
 
 // LOGIN PROCESS
 if (isset($_POST['login'])) {
@@ -25,6 +25,7 @@ if (isset($_POST['login'])) {
 
     if ($result->num_rows === 1) {
         $row = $result->fetch_assoc();
+
         if (password_verify($password, $row['password'])) {
             session_regenerate_id(true);
             $_SESSION['user_id'] = $row['user_id'];
@@ -35,9 +36,9 @@ if (isset($_POST['login'])) {
 
             // ✅ Redirect based on role
             if ($row['usertype'] == "Governor" || $row['usertype'] == "Vice Governor") {
-                $redirectPage = "admin_dashboard.php";
+                $redirectPage = "admin/admin_dashboard.php";
             } else {
-                $redirectPage = "user_dashboard.php";
+                $redirectPage = "user/user_dashboard.php";
             }
         } else {
             $message = "Invalid password!";
@@ -324,6 +325,8 @@ document.getElementById("signupForm").addEventListener("submit", function(e) {
 </script>
 </body>
 </html>
+
+
 
 
 
