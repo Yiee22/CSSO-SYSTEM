@@ -94,20 +94,20 @@ h4 {
 
 /* TABLE STYLE */
 .table {
-  background-color: #2563eb;
+  background-color: white;
   border-radius: 8px;
   overflow: hidden;
 }
 .table thead {
-  background-color: #2563eb;
-  color: white;
-  text-align: center;
+  background-color: #2563eb; /* 💙 BLUE HEADER BACKGROUND */
 }
 .table thead th {
-  border: none;
+  color: #2563eb; /* ⚪ WHITE TEXT COLOR */
+  border: #2563eb;
   font-size: 15px;
   font-weight: bold;
   letter-spacing: 0.5px;
+  text-align: center;
 }
 .table tbody td {
   text-align: center;
@@ -241,6 +241,7 @@ h4 {
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
 
 
 
